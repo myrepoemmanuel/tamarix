@@ -1,0 +1,86 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+{% block content %}
+   
+   <style>
+        .login_parent{
+            background-image: url(/static/img/1.jpg);
+            background-color: rgba(198, 244, 152, 0.96);
+            background-blend-mode: multiply;
+            background-size: cover;
+            display: grid;
+            place-items: center;
+        }
+
+        .footer-sec{
+            display: none;
+        }
+        .login-cont{
+            position: relative;
+            width: 50%;
+            background: rgba(0, 0, 0, 0.808);
+            padding: 20px;
+            /* box-shadow: 5px 5px 5px black, -5px -5px 5px black; */
+        }
+        form label{
+            font-size: 20px;
+            margin: 0 10px;
+            color: white;
+        }
+        form input{
+            margin: 0 10px;
+            width: 80%;
+            height: 3vh;
+        }
+        .success-btn2{
+            background: green;
+            padding: 10px;
+            color: white;
+            height: 5vh;
+            width: 11vh;
+            border:1px white solid;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        
+        
+    </style>
+
+    <section class="login_parent" style="min-height: 90vh;">
+        <div class="login-cont">
+        <h1 style="color: white;">LOG IN</h1>
+        <hr style="margin: 15px 0">
+            <form method="post">
+            {% csrf_token %}
+            
+            <label for="username">Username</label>
+            <br>
+            
+            <input id="username" name="username" type="text" placeholder="username">
+            <br>
+            
+
+            <hr style="margin: 15px 0">
+
+            <label for="password">Password</label>
+            <br>
+            
+            <input id="password" name="password" type="password" placeholder="Password">
+            <br>
+            
+
+            <hr style="margin: 15px 0">
+                <div style="position: relative;">
+                <button class="success-btn2" type="submit">LOG IN</button>
+                <p style="position: absolute; left: 180px; top: 0;">New user? <a style="color: orange;font-size: 18px;" href="{% url 'site-register' %}">Sign Up</a></p>
+                
+                </div>
+                
+            </form>
+        </div>
+    </section>
+    
+    
+    
+{% endblock %}

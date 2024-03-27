@@ -1,0 +1,396 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <style>
+        .footer-sec{
+            display: none;
+        }
+        .tam_rec_parent{
+            position: relative;
+            top: 4rem;
+            min-height: calc(100vh - 6rem);
+            display: grid;
+            grid-template-columns: 77%;
+            gap: 1rem;
+            justify-content: center;
+            background-image: linear-gradient(65deg, rgb(231, 224, 224),grey);
+            padding-block: 1em;
+            color: black;
+            z-index: 1;
+        }
+
+        .tam_rec_parent .printer{
+            position: relative;
+            display: grid;
+            place-items: center;
+            grid-template-rows: repeat(5, max-content);
+            gap: 1rem;
+            padding: 10px;
+        }
+
+        .printer .watermark{
+            position: absolute;
+            width: 50vh;
+            height: 50vh;
+            z-index: -1;
+            opacity: .2;
+        }
+
+        .printer .watermark img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        table{
+            border: 2px black solid;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        table th, table td{
+            padding: 10px 20px;
+            border: 1px black solid;
+            text-align: center;
+            
+        }
+
+        table th{
+            text-transform: uppercase;
+        }
+
+        table td{
+            text-transform: capitalize;
+            
+        }
+
+        .tm_rec_child3{
+            display: grid;
+            grid-template-rows: repeat(2, max-content);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .tm_rec_child3_hide{
+            display: none;
+        }
+
+        .tm_rec_child3 div{
+            display: grid;
+            grid-template-columns: 350px 350px max-content max-content;
+            gap: 1rem;
+            justify-content: start;
+        }
+        .tm_rec_child3 div h3{
+            margin: 0;
+            text-transform: capitalize;
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
+            gap: 10px;
+        }
+
+        .tm_rec_child3 div h3 span{
+            display: grid;
+            border-bottom: 1px solid #000;
+            min-width: 120px;
+            justify-content: center;
+            width: max-content;
+        }
+
+        .tam_qs{
+            grid-template-rows: 1fr;
+            margin-block: 15px;
+            width: 100%;
+        }
+
+        .tam_qs form{
+            position: relative;
+            height: max-content;
+            display: grid;
+            grid-template-rows: repeat(4, max-content);
+            gap: 10px;
+            padding: 1rem 3.5rem;
+            background: rgba(0, 0, 0, 0.364);
+            box-shadow: 2px 2px 10px 6px rgba(0, 0, 0, 0.316);
+        }
+
+        .tam_qs form label{
+            font-size: 25px;
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+
+        .tam_qs form input{
+            width: 100%;
+            height: 2.5rem;
+            padding-inline: 10px;
+            outline: none;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        .tam_qs form input[type="submit"], .tam_qs form input[type="button"]{
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .tam_qs form h3{
+            margin: 0;
+            text-transform: capitalize;
+            color: rgb(46, 4, 4);
+        }
+
+        .tam_qs form .assoc_btns{
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .tam_logo{
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 15vh;
+            width: 100%;
+            
+        }
+
+        .tam_logo .logo{
+            height: 100%;
+            width: max-content;
+        }
+
+        
+
+        .tam_logo .logo_text{
+            display: grid;
+            grid-template-rows: repeat(5, max-content);
+            width: max-content;
+            justify-self: end;
+
+        }
+
+        .tam_logo .logo_text h1, .tam_logo .logo_text h3{
+            margin: 0;
+            text-align: right;
+        }
+
+        .tam_logo .logo_text h3{
+            text-transform: capitalize;
+        }
+
+        .tam_logo .logo_text .email{
+            text-transform: none;
+        }
+
+        #create_pdf{
+            color: black;
+            cursor: pointer;
+        }
+
+
+    </style>
+
+    <section class="tam_rec_parent">
+
+        <button class="tm_records" id="create_pdf">PDF</button>
+        
+        <div class="tam_qs">
+            <form id="assoc_form">
+                <label for="assoc_num">
+                    kindly enter the Associasion number(e.g KCPA NO.) of the Counselor you wish to 
+                    have their records
+                </label>
+                <input type="text" placeholder="Enter Associasion number" id="assoc_num" name="assoc_number">
+                <h3>please reload the page incase of change of Associasion number above before searching again.</h3>
+                <div class="assoc_btns">
+                    <input type="submit" value="Search" id="assoc_search">
+                    <input type="button" value="Reload" id="assoc_reload">
+                </div>
+                
+            </form>
+        </div>
+
+        <div class="printer">
+            <div class="watermark">
+                <img src="{% static 'img/BMS.png' %}" alt="">
+            </div>
+
+            <div class="tam_logo">
+                <div class="logo">
+                </div>
+                <div class="logo_text">
+                    <h1>TAMARIX BMS PSYCHOCARE</h1>
+                    <h3>general mathenge lane opp. court yard - westlands - Nairobi</h3>
+                    <h3>P.O. BOX 31579 - 00600, Nairobi, Kenya</h3>
+                    <h3>Tel: +254 721 881609</h3>
+                    <h3 class="email">Email: rachelskioko@yahoo.com</h3>
+                </div>
+            </div>
+
+            <div>
+                <h1 style="margin:0; width: 100%; text-align: center;">TAMARIX BMS PSYCHOCARE</h1>
+                <h3 style="margin: 0; width: 100%; text-align: center; color: rgb(11, 11, 11);">Client Log In Form (Summarry of Client contact hours)</h3>
+
+            </div>
+            
+            <table id="records_table">
+                <tr>
+                    <th rowspan="2">Client Code</th>
+                    <th colspan="2">date</th>
+                    <th rowspan="2">number of hours</th>
+                    <th rowspan="2">number of Sessions</th>
+                    <th rowspan="2">presenting problem & main issues explored</th>
+                </tr>
+
+                
+                <tr id="date_ref">
+                    <td>from</td>
+                    <td>to</td>
+                </tr>
+                
+                    
+                
+
+                
+
+                <tr id="cumulative">
+                    <th colspan="3">cumulative total hours</th>
+                    <td class="sesh_hours"></td>
+                    <td class="sesh_num"></td>
+                    <td></td>
+                </tr>
+
+                
+            </table>
+            
+
+            <div class="tm_rec_child3 ">
+                {% for personal_details in personal_details %}
+                <div>
+                    <h3>name of Counselor: <span id="name_of_Counselor"></span></h3>
+                    <h3>Association No.: <span id="KCPA_no_Counselor"></span></h3>
+                    <h3>sign <span></span></h3>
+                    <h3>date <span></span></h3>
+                </div>
+                <div>
+                    <h3>name of Supervisor: <span id="name_of_Supervisor"></span></h3>
+                    <h3>Association No.: <span id="KCPA_no_Supervisor"></span></h3>
+                    <h3>sign <span></span></h3>
+                    <h3>date <span></span></h3>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    
+    <script>
+        document.getElementById('create_pdf').addEventListener('click', function(){
+            
+            const { jsPDF } = window.jspdf;
+
+            document.getElementsByClassName('email')[0].style.paddingRight = "10px";
+            html2canvas(document.querySelector('.printer')).then((canvas) => {
+                var doc = new jsPDF('p','px', 'a1');
+                let base64image = canvas.toDataURL('image/png');
+                doc.addImage(base64image, 'PNG', 10, 10, 1240, 550);
+                // doc.output('dataurlnewwindow');
+                let myRand = Math.floor(Math.random()*30000);
+                doc.save(`TamarixBMSdoc${myRand}.pdf`);
+            })
+            
+
+            
+        })
+
+        let assoc_form = document.getElementById('assoc_form');
+        let assoc_num = document.getElementById('assoc_num');
+        let assoc_search = document.getElementById('assoc_search');
+        let assoc_reload = document.getElementById('assoc_reload');
+
+        let name_of_Counselor = document.getElementById('name_of_Counselor');
+        let KCPA_no_Counselor = document.getElementById('KCPA_no_Counselor');
+        let name_of_Supervisor = document.getElementById('name_of_Supervisor');
+        let KCPA_no_Supervisor = document.getElementById('KCPA_no_Supervisor');
+
+        assoc_search.addEventListener('click', function(e){
+            submitProfileForm()
+            e.preventDefault()
+        })
+
+        assoc_reload.addEventListener('click', function(){
+            window.location.reload();
+        })
+
+        function submitProfileForm(){
+            
+            let new_table = JSON.parse('{{client_details|escapejs}}');
+            console.log(new_table)
+            let needed_child = document.getElementById('date_ref');
+            let needed_child_cumulative = document.getElementById('cumulative');
+            let needed_rows = []
+            let records_table = document.getElementById('cumulative').parentElement
+            for (let i = 0; i < new_table.length; i++) {
+                if (new_table[i]['counselor_Association'] === assoc_form.assoc_number.value){
+                    
+                    let needed_row = `
+                    <tr>
+                        <td>${new_table[i]['client_code']}</td>
+                        <td>${new_table[i]['date_from']}</td>
+                        <td>${new_table[i]['date_to']}</td>
+                        <td class="num_hours">${new_table[i]['number_of_hours']}</td>
+                        <td class="num_session">${new_table[i]['number_of_session']}</td>
+                        <td>${new_table[i]['presenting_problem']}</td>
+                    </tr>`;
+                    while (true) {
+                        if (records_table.children[2].id !== "cumulative"){
+                            records_table.removeChild(records_table.children[2]);
+                        }else{
+                            break;
+                        }
+                    }
+                    needed_rows.push(needed_row)
+
+                    name_of_Counselor.innerHTML = new_table[i]['counselor_name'];
+                    KCPA_no_Counselor.innerHTML = new_table[i]['counselor_Association'];
+                    name_of_Supervisor.innerHTML = new_table[i]['supervisor_name'];
+                    KCPA_no_Supervisor.innerHTML = new_table[i]['supervisor_Association'];
+            
+                }
+                
+            }
+
+            for (let c = 0; c < needed_rows.length; c++) {
+
+                needed_child.insertAdjacentHTML("afterend",needed_rows[c])
+                
+            }
+
+            let hourfields = document.getElementsByClassName('num_hours');
+            let seshfields = document.getElementsByClassName('num_session');
+            
+
+            let total_hours = 0;
+            let total_sesh = 0;
+            
+            for (let i = 0; i < hourfields.length; i++) {
+                total_hours += parseInt(hourfields[i].innerHTML);
+                total_sesh += parseInt(seshfields[i].innerHTML);
+                
+            }
+            
+            document.getElementsByClassName('sesh_hours')[0].innerHTML = total_hours;
+            document.getElementsByClassName('sesh_num')[0].innerHTML = total_sesh;
+
+            
+        }
+        
+    </script>
+
+{% endblock %}

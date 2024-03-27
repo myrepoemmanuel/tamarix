@@ -1,0 +1,168 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<style>
+    .footer-sec{
+        display: none;
+    }
+</style>
+
+<section class="tamarix">
+
+    <a class="tm_records" href="{% url 'tamarix_records' %}">Docs</a>
+
+    <form id="client_details" class="child-2">
+
+        <!-- editable personal details profile fields -->
+        <h1 style="margin:0; width: 100%; text-align: center;">TAMARIX BMS PSYCHOCARE</h1>
+        <h3 style="margin: 0; width: 100%; text-align: center; color: orange;">Client Log In Form (Summarry of Client contact hours)</h3>
+
+        <div class="rows row-1">
+            <div class="">
+                <label class="label">Client Code</label>
+                <input type="text" placeholder="Client Code" name="Client_Code" value="">
+            </div>
+
+            <div class="">
+                <label class="label">Number of Hours</label>
+                <input type="text" placeholder="Number of hours" name="Number_of_hours" value="">
+            </div>
+        </div>
+
+        <div class="rows one_row">
+            <div class="col-md-6">
+                <label class="label">Number of Sessions</label>
+                <input type="text" name="Number_of_session" placeholder="Number of Sessions" id="Number_of_Sessions">
+            </div>
+        </div>
+        
+
+        <div class="rows row-2">
+
+            <div class="col-md-6">
+                <label class="label">Date(From)</label>
+                <input type="date" placeholder="DD/MM/YY" name="from_date" value="">
+            </div>
+
+            <div class="col-md-6">
+                <label class="label">Date(To)</label>
+                <input type="date" placeholder="DD/MM/YY" name="to_date" value="">
+            </div>
+        </div>
+
+
+        <div class="rows row-2">
+
+            <div class="col-md-6">
+                <label class="label">Name of Counselor</label>
+                <input type="text" placeholder="Name of Counselor" name="Name_of_Counselor" value="">
+            </div>
+
+            <div class="col-md-6">
+                <label class="label">Association No</label>
+                <input type="number" placeholder="Association No" name="Association_No_Counselor" value="">
+            </div>
+        </div>
+
+        <div class="rows one_row">
+            <div class="col-md-6">
+                <label class="label">Counselor Association Body</label>
+                <input type="text" name="Counselor_body" placeholder="Counselor Association Body" id="Counselor_body">
+            </div>
+        </div>
+
+        <div class="rows row-2">
+
+            <div class="col-md-6">
+                <label class="label">Name of Supervisor</label>
+                <input type="text" placeholder="Name of Supervisor" name="Name_of_Supervisor" value="">
+            </div>
+
+            <div class="col-md-6">
+                <label class="label">Association No</label>
+                <input type="number" placeholder="Association No" name="Association_No_Supervisor" value="">
+            </div>
+        </div>
+
+        <div class="rows one_row">
+            <div class="col-md-6">
+                <label class="label">Supervisor Association Body</label>
+                <input type="text" name="Supervisor_body" placeholder="Supervisor Association Body" id="Supervisor_body">
+            </div>
+        </div>
+
+        <div class="rows">
+            <div class="col-md-6"></div>
+                <label class="label">Presenting Problem and Main Issues Explored</label>
+                <textarea name="client_problem" id="client_problem" cols="30" rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="btn-box rows row-2">
+            <button class="profile-button" type="button" id="save_client">Save</button>
+            <button class="profile-button" type="button" id="reset_form">Reset</button>
+        </div>
+
+        
+
+    </form>
+
+
+</section>
+
+<Script>
+    // submit profile data to table....
+    let client_form = document.getElementById("client_details")
+
+    document.getElementById('save_client').addEventListener('click', function(){
+        submitclientform()
+    })
+
+    function submitclientform(){
+        
+        var clientform = {
+            'Client_Code': client_form.Client_Code.value,
+            'Number_of_hours': client_form.Number_of_hours.value,
+            'Number_of_session': client_form.Number_of_session.value,
+            'from_date': client_form.from_date.value,
+            'to_date': client_form.to_date.value,
+            'Name_of_Counselor': client_form.Name_of_Counselor.value,
+            'Association_No_Counselor': client_form.Association_No_Counselor.value,
+            'Counselor_body': client_form.Counselor_body.value,
+            'Name_of_Supervisor': client_form.Name_of_Supervisor.value,
+            'Association_No_Supervisor': client_form.Association_No_Supervisor.value,
+            'Supervisor_body': client_form.Supervisor_body.value,
+            'client_problem': client_form.client_problem.value,
+        }
+        
+        
+        var url = '/process_client/';
+
+                fetch(url, {
+                    method:'POST',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body:JSON.stringify({'clientform': clientform,})
+
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('success:',data);
+                    alert('Client saved');
+                    // window.location.reload;
+                })
+        
+        
+    }
+
+
+
+</Script>
+
+
+{% endblock %}

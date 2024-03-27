@@ -1,0 +1,223 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+{% block content %}
+
+<style>
+  
+
+    .footer-sec{
+        display: none;
+    }
+
+
+
+</style>
+
+
+<div class="profile-container">
+
+
+    <div class="child-1">
+        <!-- profile pic below -->
+        <div class="profile_pic">
+            <img src="" alt="" id="profile-pic">
+        </div>
+
+        <!-- user_name box -->
+        <div class="profile_user_name">
+            <h2>{{user.username}}</h2>
+        </div>
+
+        <!-- email details and edits below -->
+        <div class="profile_email_box">
+            <input class="profile_email" type="email" placeholder="Email" name="email" value="{{user.email}}" disabled>
+            
+            <span id="edit_email">Edit</span>
+        </div>
+
+        <div class="">
+            <a class="tmx-btn" href="{% url 'tamarix' %}">tamarix</a>
+        </div>
+    </div>
+
+    <form id="personal_details" class="child-2">
+
+        <!-- editable personal details profile fields -->
+        <h2 style="margin: 0; margin-bottom: 5px;">Personal Details</h2>
+
+        <div class="rows row-1">
+            <div class="">
+                <label class="label">First Name</label>
+                <input type="text" placeholder="first name" name="first_name" value="{{ profile.first_name }}">
+            </div>
+
+            <div class="">
+                <label class="label">Last Name</label>
+                <input type="text" placeholder="last name" name="last_name" value="{{ profile.last_name }}">
+            </div>
+        </div>
+        
+        <div class="rows row-2">
+            <div>
+                <label class="label">Mobile Number</label>
+                <input type="text" placeholder="enter phone number" name="phone" value="{{ profile.phone }}">
+            </div>
+
+            <div>
+                <label class="label">Address Line 1</label>
+                <input type="text"  placeholder="enter address line 1" name="address_1" value="{{ profile.address_one }}">
+            </div>
+
+            <div>
+                <label class="label">Address Line 2</label>
+                <input type="text" placeholder="enter address line 2" name="address_2" value="{{ profile.address_two }}">
+            </div>
+
+            <div>
+                <label class="label">Postcode</label>
+                <input type="text" placeholder="enter Postcode" name="postalcode" value="{{ profile.postcode }}">
+            </div>
+
+
+        </div>
+
+        <div class="rows row-3">
+
+            <div class="col-md-6">
+                <label class="label">Country</label>
+                <input type="text" placeholder="country" name="country" value="{{ profile.country }}">
+            </div>
+
+            <div class="col-md-6">
+                <label class="label">State/Region</label>
+                <input type="text" placeholder="state" name="region" value="{{ profile.region }}">
+            </div>
+        </div>
+
+        <div class="btn-box">
+            <button style="width: 40%;" class="profile-button" type="button" id="save_profile">Save</button>
+        </div>
+
+    </form>
+
+    <!-- {% if show_form == 'yes' %}
+        <div class="child-3">
+            <h2 style="margin: 0; margin-bottom: 5px;">Vendor Details</h2>
+            
+
+            <form class="profile_vendor_reg" id="profile_vendor_reg">
+                
+                <input type="text" name="shop" id="shop_name" placeholder="Enter your Shops name..." required>
+                
+                <select name="shop_location" id="shop_location" required>
+                    <option value="shop_location">Choose your Shop's location</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Thika">Thika</option>
+                    <option value="Naivasha">Naivasha</option>
+                </select>
+                <input type="text" name="ID_number" id="ID_number" placeholder="Enter your ID number..." required>
+                <div style="display: grid; grid-template-columns: 1fr;">
+                    <label for="date_of_birth" style="margin-bottom: 5px;">Choose you Date of Birth</label>
+                    <input type="date" name="date_of_birth" id="date_of_birth" required>
+                </div>
+                <input type="text" name="phone" id="phone_number" placeholder="Enter your phone number..." required>
+
+                <div>
+                    <span style="display: grid; grid-template-columns: max-content 1fr;">
+                        <input style="width: max-content; height: max-content;" type="checkbox" name="vendor_check" id="vendor_check" required>
+                        <label for="vendor_check" style="display: contents; font-size: 0.9em;">
+                            Please check the box to confirm registration as a vendor 
+                        </label>
+                        <span style="font-size: smaller; grid-column: 2; color: darkgray; font-weight: 600;">By checking you agree to the <a href="#">Terms and conditions</a></span>
+                    </span>
+                    
+                </div>
+
+                <button style="width: 40%; text-align: center;" class="success-btn" id="save_vendor_info">Submit</button>
+            </form>
+        </div>
+    {% else %}
+        <div style="width: 100%; height: 50%; display: grid; text-align: center; place-items: center;">
+            <h1 style="line-height: 50px;">
+                You're Already Registered as a Vendor. Visit your 
+                <a style="color: rgb(59, 82, 84); text-decoration: none; background: #b8c1c9; padding: 5px 13px; border-radius: 3px;" href="#">Dashboard</a>
+            </h1>
+        </div>
+    {% endif %} -->
+</div>
+
+<script>
+
+    
+    // vendor checkbox funtionality.....
+    let vendor_accept = document.getElementById("vendor_check"); 
+    
+    
+    // email edit on profile.......
+    
+    document.getElementById("edit_email").addEventListener("click", function(){
+        this.innerHTML = "Save";
+        this.setAttribute('id', 'save_email')
+        document.getElementsByClassName("profile_email")[0].disabled = false;
+        document.getElementsByClassName("profile_email")[0].style.focus = true;
+        document.getElementsByClassName("profile_email")[0].style.borderBottom = "2px  white solid";
+        document.getElementsByClassName("profile_email")[0].style.width = "180px";
+    })
+
+    // submit profile data to table....
+    let profile_form = document.getElementById("personal_details")
+
+    document.getElementById('save_profile').addEventListener('click', function(){
+        submitProfileForm()
+    })
+    
+    
+    
+    
+    function submitProfileForm(){
+        
+        var profileInfo = {
+            'first_name': profile_form.first_name.value,
+            'last_name': profile_form.last_name.value,
+            'phone': profile_form.phone.value,
+            'address_1': profile_form.address_1.value,
+            'address_2': profile_form.address_2.value,
+            'postalcode': profile_form.postalcode.value,
+            'country': profile_form.country.value,
+            'region': profile_form.region.value,
+        }
+        
+        
+        var url = '/process_profile/';
+
+                fetch(url, {
+                    method:'POST',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body:JSON.stringify({'profileInfo': profileInfo,})
+
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('success:',data);
+                    alert('Profile saved');
+                    // window.location.reload;
+                })
+        
+        
+    }
+
+ 
+
+</script>
+
+
+
+
+
+{% endblock %}

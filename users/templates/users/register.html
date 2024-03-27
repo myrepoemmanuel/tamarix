@@ -1,0 +1,91 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+{% block content %}
+    <style>
+        .reg-cont{
+            position: relative;
+            top: 15vh;
+            left: 7%;
+            width: 60%;
+            background: black;
+            opacity: .8;
+            padding: 20px;
+            box-shadow: 5px 5px 5px black, -5px -5px 5px black;
+            
+        }
+
+        .footer-sec{
+            display: none;
+        }
+        form label{
+            font-size: 20px;
+            margin: 0 10px;
+        }
+        
+        form input{
+            margin: 0 10px;
+            width: 80%;
+            height: 3vh;
+        }
+        #id_username{
+            margin: 0 10px;
+            width: 80%;
+            height: 3vh;
+            border-radius: 0;
+        }
+        
+        .success-btn2{
+            background: green;
+            padding: 10px;
+            color: white;
+            height: 5vh;
+            width: 11vh;
+            border:1px white solid;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        
+        
+        .success-btn3{
+            background: orange;
+            padding: 15px 25px;
+            color: white;
+            height: 5vh;
+            width: 11vh;
+            border:1px white solid;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        
+        
+    </style>
+    <section style="min-height: 90vh; overflow: auto;">
+    <div class="reg-cont">
+       <h1 style="color: white;">Sign Up</h1>
+       <hr style="margin: 15px 0">
+        <form method="post">
+          {% csrf_token %}
+          
+           {% for field in form %}
+             
+                 {{ field.label_tag }}<br>
+                 
+                 <div>{{ field }}</div><br>
+                 
+                 
+
+                 {% if field.help_text %}
+                     <small style="color: white;">{{ field.help_text }}</small><br>
+                 {% endif %}
+                  <hr style="margin: 15px 0">
+             
+            {% endfor %}
+            <div style="position: relative;">
+            <button class="success-btn2" type="submit">Sign up</button>
+            <p style="position: absolute; left: 180px; top: 0;">Already have an account <a href="{% url 'site-login' %}" class="success-btn3">Log in</a></p>
+            </div>
+        </form>
+    </div>
+    </section>
+{% endblock %}

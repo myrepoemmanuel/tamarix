@@ -1,0 +1,51 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+{% block content %}
+   
+   <style>
+        .logout-cont{
+            position: relative;
+            top: 15vh;
+            left: 7%;
+            max-height: 20vh;
+            width: 60%;
+            background: black;
+            opacity: .8;
+            padding: 20px;
+            box-shadow: 5px 5px 5px black, -5px -5px 5px black;
+            
+        }
+
+        .footer-sec{
+            display: none;
+        }
+       
+       .success-btn2{
+            background: green;
+            padding: 10px;
+            color: white;
+            height: 5vh;
+            width: 11vh;
+            border:1px white solid;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+    <section style="min-height: 90vh;">
+    <div class="logout-cont">
+     
+            <div style="position: relative;">
+                
+            <p style="font-size: 35px; color: white;">Successfully logged out </p>
+            </div>
+            
+            <div style="position: relative;">
+                <a style="text-decoration: none; padding: 8px 20px;" class="success-btn2" href="{% url 'site-login' %}">Log in</a>
+            </div>
+            
+            
+        
+    </div>
+    </section>
+{% endblock %}
